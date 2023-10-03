@@ -1,0 +1,49 @@
+
+// Find all possible permutations of a string. Answers can be returned in any order and answers may not repeat
+// given str = 'abc'
+// expected output:
+// a
+// b
+// c
+// ab
+// bc
+// ac
+// abc
+
+function allPossible(str) {
+    let results = [];
+
+    function combine(prefix, remaining, start) {
+        if (prefix.length) {
+            results.push(prefix)
+        }
+        for (let i = start; i < remaining.length; i++) {
+            combine(prefix + remaining[i], remaining, i + 1);
+        }
+    }
+
+    const strArr = str.split('')
+
+    combine('', strArr, 0);
+    return results;
+}
+
+const str = 'abc';
+const combinations = allPossible(str);
+console.log(combinations);
+
+// p = a r = abc s = 1
+// | => "a"
+// | p = ab r = abc s = 2
+//   | => "ab"
+//   | => p = abc r = abc s = 3
+//       | => "abc"
+// | p = ac r = abc s = 3
+// | => "ac"
+// p = b r = abc s = 2
+// | => "b"
+// | p = bc r = abc s = 3
+// | => "bc"
+// p = c r = abc s = 3
+// | => "c"
+// | Returns because s = 3
